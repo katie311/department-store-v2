@@ -20,21 +20,21 @@ class DepartmentForm extends React.Component {
   //       };
   //     };
 
-      handleSubmit = (e) => {
-        e.preventDefault();
-        if (this.props.toggleEdit) {
-          this.props.editDepartment(this.state)
-          this.props.toggleEdit()
-        }
-        else {
-          const department = { ...this.state, };
-          axios.post("/api/departments", department)
-            .then( res => {
-              this.props.history.push("/departments");
-            })
-            this.setState({ name: "" });
-        }
-      }
+  handleSubmit = (e) => {
+    e.preventDefault();
+    if (this.props.toggleEdit) {
+      this.props.editDepartment(this.state)
+      this.props.toggleEdit()
+    }
+    else {
+      const department = { ...this.state, };
+      axios.post("/api/departments", department)
+        .then( res => {
+          this.props.history.push("/departments");
+        })
+        this.setState({ name: "" });
+    }
+  }
     
 
   handleChange = (e) => {

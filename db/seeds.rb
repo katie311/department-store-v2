@@ -1,17 +1,17 @@
 require 'faker'
 
-# 10.times do
-#     Department.create(
-#         name: Faker::Commerce.department,
-#     )
+10.times do
+    department = Department.create(
+        name: Faker::Commerce.department
+    )
+
     100.times do
-    Product.create(
+    department.products.create(
         name: Faker::Commerce.product_name,
-        description: Faker::Lorem.sentence,
-        price: Faker::Commerce.price.to_f,
-        department_id: department.id
+        description: Faker::TvShows::RickAndMorty.quote,
+        price: Faker::Commerce.price.to_f
         )
     end
-
+end
   
-  puts "100 Products Seeded"
+puts "10 Departments Seeded, 100 Products Seeded"

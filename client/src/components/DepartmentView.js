@@ -1,34 +1,34 @@
 import React from "react";
 import axios from "axios";
 import DepartmentForm from './DepartmentForm';
-import { Button, Header, Segment, Icon, } from "semantic-ui-react";
+import Products from './Products';
+import ProductForm from './ProductForm';
+import { Link, } from 'react-router-dom';
+import { Button, Header, Segment, Icon, Card, } from "semantic-ui-react";
 
 class DepartmentView extends React.Component {
-  state = { department: {}, 
-    editing: false };
+  state = { 
+    department: {}, 
+    products: [],
+    editing: false,
+    showProductForm: false
+  };
 
   componentDidMount() {
     axios.get(`/api/departments/${this.props.match.params.id}`)
       .then( res => {
         this.setState({ department: res.data, });
       })
+    axios.get(`/api/departments/${this.props.match.params.id}/products`)
+      .then( res => {
+        this.setState({ products: res.data, });
+      })
   }
+
 
   toggleEdit = () => {
     this.setState({editing: !this.state.editing})
   }
-
-  // editDepartment = (id, name) => {
-  //   axios.put(`/api/departments/${id}`, {name})
-  //     .then( res => {
-  //       const departments = this.state.departments.map( d => {
-  //       if (d.id === id)
-  //         return res.data;
-  //       return d;
-  //     });
-  //     this.setState({ departments: [...this.state.departments, res.data], });
-  //   });
-  // }
 
   editDepartment = (department) => {
     const id = this.props.match.params.id
@@ -41,6 +41,15 @@ class DepartmentView extends React.Component {
     })
     this.setState({ department });
   }
+
+  addProduct = (name, description, price) => {
+    axios.post(`/api/departments/${this.props.match.params.id}/products`, { name, description, price})
+      .then( res => {
+        this.setState({ products: [...this.state.products, res.data], });
+      });
+    }
+
+  toggleProductForm = () => this.setState({ showProductForm: !this.state.showProductForm });
 
   render() {
     const { name, } = this.state.department;
@@ -61,11 +70,10 @@ class DepartmentView extends React.Component {
         </Segment>
         }
         <br />
-        <br />
         <Button 
           color="black" 
           onClick={this.props.history.goBack}
-        >
+          >
           Back
         </Button>
         <Button
@@ -74,11 +82,23 @@ class DepartmentView extends React.Component {
             size="tiny" 
             onClick={this.toggleEdit} 
             style={{ marginLeft: "15px", }}
-          >
+            >
           <Icon name="pencil" />
           </Button>
-      </div>
-    )
+          <Segment>
+              <Header>Products</Header>
+          <Button onClick={this.toggleProductForm}>
+              Add Product
+          </Button>
+          <Segment basic>{this.state.showProductForm ? <ProductForm addProduct={ this.addProduct } /> : null }</Segment>
+          <hr />
+          <Card.Group>
+          <Products 
+            products={this.state.products}
+            /></Card.Group>
+          </Segment>
+        </div>
+    );
   }
 }
 
