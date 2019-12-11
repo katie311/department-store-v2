@@ -7,6 +7,8 @@ const Products = (props) => (
         <Product 
             key={product.id} 
             {...product} 
+            deleteProduct={props.deleteProduct}
+            editProduct={props.editProduct}
         />
     )
 ))

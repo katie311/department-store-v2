@@ -49,6 +49,14 @@ class DepartmentView extends React.Component {
       });
     }
 
+    deleteProduct = (id) => {
+      axios.delete(`/api/departments/${this.props.match.params.id}/products/${id}`)
+        .then( res => {
+          const { products, } = this.state;
+          this.setState({ products: products.filter(d => d.id !== id), })
+        });
+    }
+
   toggleProductForm = () => this.setState({ showProductForm: !this.state.showProductForm });
 
   render() {
@@ -95,7 +103,10 @@ class DepartmentView extends React.Component {
           <Card.Group>
           <Products 
             products={this.state.products}
-            /></Card.Group>
+            deleteProduct={this.deleteProduct}
+            // editProduct={this.editProduct}
+            />
+            </Card.Group>
           </Segment>
         </div>
     );
