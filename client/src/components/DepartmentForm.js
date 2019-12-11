@@ -5,20 +5,36 @@ import { Form, Header, } from "semantic-ui-react";
 class DepartmentForm extends React.Component {
   state = { name: '' };
 
-  handleSubmit = (e) => {
-    e.preventDefault();
-    if (this.props.toggleEdit) {
-      this.props.editDepartment(this.props.id, this.state)
-      this.props.toggleEdit()
-    } else {
-      const department = { ...this.state, };
-      axios.post("/api/departments", department)
-        .then( res => {
-          this.props.history.push("/departments");
-        });
-      this.setState({ ...this.defaultValues, });
-        };
-      };
+  // handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   if (this.props.toggleEdit) {
+  //     this.props.editDepartment(this.props.id, this.state)
+  //     this.props.toggleEdit()
+  //   } else {
+  //     const department = { ...this.state, };
+  //     axios.post("/api/departments", department)
+  //       .then( res => {
+  //         this.props.history.push("/departments");
+  //       });
+  //     this.setState({ ...this.defaultValues, });
+  //       };
+  //     };
+
+      handleSubmit = (e) => {
+        e.preventDefault();
+        if (this.props.toggleEdit) {
+          this.props.editDepartment(this.state)
+          this.props.toggleEdit()
+        }
+        else {
+          const department = { ...this.state, };
+          axios.post("/api/departments", department)
+            .then( res => {
+              this.props.history.push("/departments");
+            })
+            this.setState({ name: "" });
+        }
+      }
     
 
   handleChange = (e) => {

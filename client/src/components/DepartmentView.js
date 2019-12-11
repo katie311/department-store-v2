@@ -18,18 +18,29 @@ class DepartmentView extends React.Component {
     this.setState({editing: !this.state.editing})
   }
 
-  editDepartment = (id, name) => {
-    axios.put(`/api/departments/${id}`, {name})
-      .then( res => {
-        const departments = this.state.departments.map( d => {
-        if (d.id === id)
-          return res.data;
-        return d;
-      });
-      this.setState({ departments: [...this.state.departments, res.data], });
-    });
-  }
+  // editDepartment = (id, name) => {
+  //   axios.put(`/api/departments/${id}`, {name})
+  //     .then( res => {
+  //       const departments = this.state.departments.map( d => {
+  //       if (d.id === id)
+  //         return res.data;
+  //       return d;
+  //     });
+  //     this.setState({ departments: [...this.state.departments, res.data], });
+  //   });
+  // }
 
+  editDepartment = (department) => {
+    const id = this.props.match.params.id
+    axios.put(`/api/departments/${id}`, {department})
+    .then( res => {
+      const department = this.state.department
+      if (department.id === id)
+        return res.data
+      return department
+    })
+    this.setState({ department });
+  }
 
   render() {
     const { name, } = this.state.department;
