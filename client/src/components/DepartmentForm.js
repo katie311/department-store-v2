@@ -58,7 +58,7 @@ class DepartmentForm extends React.Component {
               required
             />
           </Form.Group>
-          <Form.Button color="blue">Submit</Form.Button>
+          <Form.Button color="light-grey">Submit</Form.Button>
         </Form>
       </div>
     )

@@ -3,6 +3,7 @@ import axios from "axios";
 import DepartmentForm from './DepartmentForm';
 import Products from './Products';
 import ProductForm from './ProductForm';
+import styled from 'styled-components';
 import { Link, } from 'react-router-dom';
 import { Button, Header, Segment, Icon, Card, } from "semantic-ui-react";
 
@@ -39,7 +40,7 @@ class DepartmentView extends React.Component {
         return res.data
       return department
     })
-    this.setState({ department });
+    this.setState({ department, });
   }
 
   addProduct = (name, description, price) => {
@@ -77,7 +78,6 @@ class DepartmentView extends React.Component {
           <Header as="h1">{ name }</Header>
         </Segment>
         }
-        <br />
         <Button 
           color="black" 
           onClick={this.props.history.goBack}
@@ -94,23 +94,26 @@ class DepartmentView extends React.Component {
           <Icon name="pencil" />
           </Button>
           <Segment>
-              <Header>Products</Header>
+              <Header as='h2'>Products</Header>
           <Button onClick={this.toggleProductForm}>
               Add Product
           </Button>
-          <Segment basic>{this.state.showProductForm ? <ProductForm addProduct={ this.addProduct } /> : null }</Segment>
+          <div>{this.state.showProductForm ? <ProductForm addProduct={ this.addProduct } /> : null }</div>
           <hr />
+          <br />
           <Card.Group>
-          <Products 
-            products={this.state.products}
-            deleteProduct={this.deleteProduct}
-            // editProduct={this.editProduct}
-            />
-            </Card.Group>
+            <Products 
+              products={this.state.products}
+              deleteProduct={this.deleteProduct}
+              editProduct={this.editProduct}
+              />
+          </Card.Group>
           </Segment>
+          <br />
         </div>
     );
   }
 }
+
 
 export default DepartmentView;

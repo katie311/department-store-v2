@@ -1,10 +1,11 @@
 import React from "react";
 import axios from 'axios';
 import { Card, Header, Button, Icon, } from "semantic-ui-react";
+import ProductForm from "./ProductForm";
 
 class Product extends React.Component {
     state = {
-        product: {},
+        product: [],
         editing: false,
     }
 
@@ -32,12 +33,21 @@ class Product extends React.Component {
 
     render() {
         return (
-            <Card>
+            <Card>{
+                this.state.editing ? 
+                <ProductForm 
+                    name={this.name}
+                    description={this.description}
+                    price={this.price}
+                    toggleEdit={this.toggleEdit}
+                    editProduct={this.editProduct}
+                />
+                :
             <Card.Content>
                 <Header>{ this.props.name }</Header>
                 <Card.Description>{ this.props.description }</Card.Description>
                 <Header>{ this.props.price }</Header>
-            </Card.Content>
+            </Card.Content>}
             <Card.Content extra>
                 <Button 
                     icon 
@@ -52,12 +62,13 @@ class Product extends React.Component {
                     icon 
                     color="green" 
                     size="tiny" 
-                    onClick={this.toggleEdit} 
+                    onClick={this.toggleEdit}
                     style={{ marginLeft: "15px", }}
                 >
                 <Icon name="pencil" />
                 </Button>
             </Card.Content>
+            
             </Card>
         )
     }

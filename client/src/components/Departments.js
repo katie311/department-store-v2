@@ -1,7 +1,8 @@
 import React from "react";
 import axios from 'axios';
+import styled from 'styled-components';
 import { Link, } from 'react-router-dom';
-import { Card, Header, Button, Icon, } from "semantic-ui-react";
+import { Card, Header, Button, Icon, Segment, } from "semantic-ui-react";
 
 class Departments extends React.Component {
   state = { departments: [],};
@@ -30,6 +31,8 @@ class Departments extends React.Component {
       return <h2>No Departments</h2>
     return departments.map( department => (
       <div>
+        <Segment basic>
+        <Card.Group>
       <Card>
         <Card.Content>
           <Card.Header>{ department.name }</Card.Header>
@@ -39,7 +42,7 @@ class Departments extends React.Component {
           </Card.Description>
         </Card.Content>
         <Card.Content extra>
-          <Button as={Link} to={`/departments/${department.id}`} color='blue'>
+          <Button as={Link} to={`/departments/${department.id}`} color="light-grey">
             View Department
           </Button>
           <Button 
@@ -53,6 +56,8 @@ class Departments extends React.Component {
           </Button>
         </Card.Content>
       </Card>
+        </Card.Group>
+        </Segment>
       </div>
     ))
   }
@@ -60,19 +65,29 @@ class Departments extends React.Component {
   render() {
     return (
       <div>
-        <Header as="h1">Departments</Header>
-        <br />
-        <Button as={Link} color="blue" to="/departments/new">
-            Add Department
-        </Button>
-        <br />
-        <br />
-        <Card.Group>
-          { this.renderDepartments() }
-        </Card.Group>
+        <Segment>
+          <Header as="h1">Departments</Header>
+        </Segment>
+
+        <Segment>
+          <Button as={Link} color="light-grey" to="/departments/new">
+              Add Department
+          </Button>
+          <hr />
+          <br />
+            <Card.Group>
+              { this.renderDepartments() }
+            </Card.Group>
+            <br />
+        </Segment>
+
       </div>
     )
   }
 }
+
+const StyledCard = styled(Card)`
+
+  `
 
 export default Departments;

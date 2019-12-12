@@ -8,19 +8,17 @@ class ProductForm extends React.Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    // if (this.props.toggleEdit) {
-    //   this.props.editproduct(this.state)
-    //   this.props.toggleEdit()
-    // }
-    // else {
+    if (this.props.toggleEdit) {
+      this.props.editProduct(this.state)
+      this.props.toggleEdit()
+    }
+    else {
     this.props.addProduct(this.state.name, this.state.description, this.state.price)
     this.setState({ name: '', description: '', price: '', })
-    debugger
-  }
+  }};
 
   handleChange = (e) => {
-    const { target: { name, value} } = e
-    this.setState({ [name]: value, })
+    this.setState({ [e.target.name]: e.target.value, })
   }
 
   render() {
@@ -57,7 +55,7 @@ class ProductForm extends React.Component {
               required
             />
           </Form.Group>
-          <Form.Button color="blue">Submit</Form.Button>
+          <Form.Button color="light-grey">Submit</Form.Button>
         </Form>
       </div>
     )
